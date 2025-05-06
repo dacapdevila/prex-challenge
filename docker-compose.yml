@@ -1,0 +1,39 @@
+services:
+    app:
+        build: .
+        container_name: "${APP_NAME}"
+        ports: ["${APP_PORT}:8000"]
+        volumes: [".:/var/www/html"]
+        depends_on: [db]
+        environment:
+            APP_ENV: ${APP_ENV}
+            DB_CONNECTION: mysql
+            DB_HOST: ${DB_HOST}
+            DB_PORT: ${DB_PORT}
+            DB_DATABASE: ${DB_DATABASE}
+            DB_USERNAME: ${DB_USERNAME}
+            DB_PASSWORD: ${DB_PASSWORD}
+        networks: ["internal_net"]
+
+    db:
+        image: ${DB_IMAGE}
+        container_name: ${DB_CONTAINER_NAME}
+        ports: ["${DB_PORT_OUT}:${DB_PORT}"]
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+        volumes: ["db_data:/var/lib/mysql"]
+        command: >
+            --character-set-server=utf8mb4
+            --collation-server=utf8mb4_unicode_ci
+        networks: ["internal_net"]
+
+volumes:
+    db_data:
+
+networks:
+    internal_net:
+        name: ${DB_NETWORK}
+        driver: bridge
