@@ -3,7 +3,6 @@ services:
         build: .
         container_name: "${APP_NAME}"
         ports: ["${APP_PORT}:8000"]
-        volumes: [".:/var/www/html"]
         depends_on: [db]
         environment:
             APP_ENV: ${APP_ENV}
@@ -29,6 +28,14 @@ services:
             --character-set-server=utf8mb4
             --collation-server=utf8mb4_unicode_ci
         networks: ["internal_net"]
+
+    node:
+        image: node:20-alpine
+        working_dir: /var/www/html
+        volumes: [".:/var/www/html"]
+        command: sh -c "npm install && npm run dev"
+        networks: ["internal_net"]
+        profiles: ["dev"]
 
 volumes:
     db_data:
