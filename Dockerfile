@@ -33,5 +33,6 @@ WORKDIR /var/www/html
 
 COPY --from=builder /app /var/www/html
 COPY --from=builder /app/public/build /var/www/html/public/build
+COPY --from=builder /usr/local/bin/composer /usr/local/bin/composer
 
 CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
