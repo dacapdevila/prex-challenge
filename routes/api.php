@@ -21,7 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['auth:api'])->prefix('gifs')->group(function () {
+Route::middleware(['auth:api', 'audit'])->prefix('gifs')->group(function () {
     Route::get('/', SearchController::class);
     Route::get('/{id}', ShowController::class);
     Route::post('/{id}/favorite', FavoriteController::class);
