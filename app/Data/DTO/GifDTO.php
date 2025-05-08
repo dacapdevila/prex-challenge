@@ -2,7 +2,12 @@
 
 namespace App\Data\DTO;
 
-final readonly class GifDTO
+use Illuminate\Contracts\Support\Responsable;
+use Illuminate\Http\JsonResponse;
+use JsonSerializable;
+use Symfony\Component\HttpFoundation\Response;
+
+final readonly class GifDTO implements JsonSerializable, Responsable
 {
     public function __construct(
         public string $id,
@@ -19,5 +24,10 @@ final readonly class GifDTO
             'title' => $this->title,
             'preview' => $this->preview,
         ];
+    }
+
+    public function toResponse($request): JsonResponse|Response
+    {
+        return response()->json($this->jsonSerialize());
     }
 }

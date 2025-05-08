@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Gif\SearchController;
+use App\Http\Controllers\Api\Gif\ShowController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware(['auth:api'])->prefix('gifs')->group(function () {
     Route::get('/', SearchController::class);
+    Route::get('/{id}', ShowController::class);
 });
