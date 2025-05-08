@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Gif\FavoriteController;
 use App\Http\Controllers\Api\Gif\SearchController;
 use App\Http\Controllers\Api\Gif\ShowController;
 use Illuminate\Http\Request;
@@ -23,4 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware(['auth:api'])->prefix('gifs')->group(function () {
     Route::get('/', SearchController::class);
     Route::get('/{id}', ShowController::class);
+    Route::post('/{id}/favorite', FavoriteController::class);
 });
