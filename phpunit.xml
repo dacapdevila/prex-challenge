@@ -13,6 +13,15 @@
         <include>
             <directory>app</directory>
         </include>
+        <exclude>
+            <file>app/Providers/BroadcastServiceProvider.php</file>
+            <file>app/Http/Middleware/TrustHosts.php</file>
+            <file>app/Http/Controllers/Auth/EmailVerificationNotificationController.php</file>
+            <file>app/Console/Kernel.php</file>
+            <file>app/Http/Requests/Auth/LoginRequest</file>
+            <file>app/Http/Middleware/RedirectIfAuthenticated</file>
+            <file>app/Http/Controllers/Auth/VerifyEmailController</file>
+        </exclude>
     </source>
     <coverage cacheDirectory="storage/coverage/.cache">
         <report>
