@@ -8,6 +8,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class EloquentFavoriteRepository implements FavoriteRepositoryInterface
 {
+    public function find(int $id): ?Favorite
+    {
+        return Favorite::find($id);
+    }
+
     public function save(int $userId, string $gifId, string $alias): Favorite
     {
         return Favorite::create([
