@@ -53,6 +53,10 @@
         ],
         "post-update-cmd": [
             "@php -r \"exec('bash scripts/install-hooks.sh');\""
+        ],
+        "test": [
+            "php artisan test",
+            "php artisan passport:restore"
         ]
     },
     "extra": {

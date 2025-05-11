@@ -1,17 +1,33 @@
 <?php
 
-namespace Database\Seeders;
+namespace App\Console\Commands;
 
-use Illuminate\Database\Seeder;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class OauthClientSeeder extends Seeder
+class RestorePassportClient extends Command
 {
     /**
-     * Run the database seeds.
+     * The name and signature of the console command.
+     *
+     * @var string
      */
-    public function run(): void
+    protected $signature = 'passport:restore';
+
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Restore OAuth password client after tests';
+
+    /**
+     * Execute the console command.
+     */
+    public function handle(): int
     {
+        $this->info('Restoring passport password client...');
+
         DB::table('oauth_clients')->updateOrInsert(
             ['id' => 1],
             [
@@ -26,5 +42,7 @@ class OauthClientSeeder extends Seeder
                 'updated_at' => now(),
             ]
         );
+
+        return self::SUCCESS;
     }
 }
