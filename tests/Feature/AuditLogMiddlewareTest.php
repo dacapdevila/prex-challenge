@@ -23,6 +23,7 @@ class AuditLogMiddlewareTest extends TestCase
             'method' => 'POST',
             'path' => 'testing/123',
             'request' => ['testing' => '123', 'api_token' => 'xyz'],
+            'response' => ['testing' => '123', 'api_token' => 'xyz'],
             'status_code' => 201,
             'ip_address' => '127.0.0.1',
         ];
@@ -38,6 +39,16 @@ class AuditLogMiddlewareTest extends TestCase
             'status_code' => 201,
             'ip_address' => '127.0.0.1',
         ]);
+
+        $this->assertEqualsCanonicalizing(
+            ['testing' => '123', 'api_token' => 'xyz'],
+            $log->request
+        );
+
+        $this->assertEqualsCanonicalizing(
+            ['testing' => '123', 'api_token' => 'xyz'],
+            $log->response
+        );
 
         $this->assertEquals($data['request'], $log->request);
     }

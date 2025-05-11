@@ -14,11 +14,13 @@ class AuditLog extends Model
         'method',
         'path',
         'request',
+        'response',
         'status_code',
         'ip_address',
     ];
 
     protected $casts = [
         'request' => 'array',
+        'response' => 'array',
     ];
 }

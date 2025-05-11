@@ -28,7 +28,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/login', LoginController::class);
 Route::post('/register', RegisterController::class);
-Route::middleware('auth:api')->post('/logout', LogoutController::class);
+Route::middleware(['auth:api', 'audit'])->post('/logout', LogoutController::class);
 
 Route::middleware(['auth:api', 'audit'])->prefix('gifs')->group(function () {
     Route::get('/', SearchController::class);
