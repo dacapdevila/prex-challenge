@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+set -e
+
+echo "🔍 Running Laravel Pint"
+docker compose exec -T app vendor/bin/pint --test
+
+echo "🧪 Running PHPUnit"
+docker compose exec -T app php artisan test --env=testing --testsuite=Unit,Feature

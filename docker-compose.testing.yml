@@ -1,0 +1,13 @@
+services:
+  app:
+    build:
+      context: .
+    environment:
+      APP_ENV: testing
+      DB_CONNECTION: sqlite
+      DB_DATABASE: ":memory:"
+    env_file:
+      - .env.testing
+    command: ["php", "artisan", "test", "--no-coverage"]
+    stdin_open: true
+    tty: true

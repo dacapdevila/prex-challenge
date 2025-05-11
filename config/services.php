@@ -14,11 +14,20 @@ return [
     |
     */
 
+    'giphy' => [
+        'key' => env('GIPHY_API_KEY'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
         'endpoint' => env('MAILGUN_ENDPOINT', 'api.mailgun.net'),
         'scheme' => 'https',
+    ],
+
+    'passport' => [
+        'client_id' => env('PASSPORT_PASSWORD_CLIENT_ID'),
+        'client_secret' => env('PASSPORT_PASSWORD_CLIENT_SECRET'),
     ],
 
     'postmark' => [
