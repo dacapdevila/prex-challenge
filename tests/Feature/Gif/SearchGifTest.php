@@ -3,12 +3,15 @@
 namespace Tests\Feature\Gif;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class SearchGifTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_search_returns_expected_structure(): void
     {
         Passport::actingAs(User::factory()->create());
@@ -35,15 +38,20 @@ class SearchGifTest extends TestCase
                 'gifs' => [
                     ['id', 'url', 'title', 'preview'],
                 ],
-                'pagination' => ['total', 'count', 'offset'],
+                'pagination' => ['total_count', 'count', 'offset'],
             ])
             ->assertJsonPath('gifs.0.id', 'abc')
             ->assertJsonPath('pagination.count', 1);
 
         Http::assertSent(function ($request) {
-            return $request->url() === 'https://api.giphy.com/v1/gifs/search'
-                && $request['q'] === 'cat'
-                && $request['limit'] == 1;
+            $url = $request->url();
+            $parsed = parse_url($url);
+            parse_str($parsed['query'] ?? '', $query);
+
+            return $parsed['path'] === '/v1/gifs/search'
+                && ($parsed['host'] ?? '') === 'api.giphy.com'
+                && $query['q'] === 'cat'
+                && $query['limit'] == 1;
         });
     }
 

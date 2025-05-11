@@ -4,10 +4,13 @@ namespace Tests\Feature\Resources;
 
 use App\Http\Resources\Auth\LoginResource;
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class LoginResourceTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_login_resource_returns_expected_data()
     {
         $user = User::factory()->make();

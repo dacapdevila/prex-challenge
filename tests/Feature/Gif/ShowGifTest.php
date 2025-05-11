@@ -3,18 +3,21 @@
 namespace Tests\Feature\Gif;
 
 use App\Models\User;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
 class ShowGifTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_show_returns_expected_structure(): void
     {
         Passport::actingAs(User::factory()->create());
 
         Http::fake([
-            'https://api.giphy.com/v1/gifs/abc' => Http::response([
+            'https://api.giphy.com/v1/gifs/*' => Http::response([
                 'data' => [
                     'id' => 'abc',
                     'url' => 'https://giphy.com/gifs/abc',
@@ -42,7 +45,7 @@ class ShowGifTest extends TestCase
             ]);
 
         Http::assertSent(function ($request) {
-            return $request->url() === 'https://api.giphy.com/v1/gifs/abc'
+            return str_contains($request->url(), '/v1/gifs/abc')
                 && $request->method() === 'GET';
         });
     }
@@ -52,7 +55,7 @@ class ShowGifTest extends TestCase
         Passport::actingAs(User::factory()->create());
 
         Http::fake([
-            'https://api.giphy.com/v1/gifs/abc' => Http::response(['message' => 'Service down'], 503),
+            'https://api.giphy.com/v1/gifs/*' => Http::response([], 503),
         ]);
 
         $this->getJson('/api/gifs/abc')

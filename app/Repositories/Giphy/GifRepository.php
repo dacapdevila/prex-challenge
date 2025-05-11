@@ -26,13 +26,15 @@ class GifRepository implements GifRepositoryInterface
                 $g['title'] ?? '',
                 $g['images']['preview_gif']['url'] ?? '',
             ))
+//            ->map(fn (GifDTO $dto) => $dto->jsonSerialize())
             ->all();
 
         $p = $json['pagination'];
+        $pagination = new PaginationDTO($p['total_count'], $p['count'], $p['offset']);
 
         return [
             'gifs' => $gifs,
-            'pagination' => new PaginationDTO($p['total_count'], $p['count'], $p['offset']),
+            'pagination' => $pagination,
         ];
     }
 

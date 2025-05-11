@@ -5,11 +5,14 @@ namespace Tests\Unit\Gif;
 use App\Data\DTO\GifDTO;
 use App\Data\DTO\PaginationDTO;
 use App\Repositories\Contracts\GifRepositoryInterface;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
 class GifRepositoryTest extends TestCase
 {
+    use RefreshDatabase;
+
     public function test_repository_maps_json_to_dto(): void
     {
         Http::fake([

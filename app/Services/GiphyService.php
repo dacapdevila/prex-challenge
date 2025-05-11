@@ -39,13 +39,10 @@ class GiphyService
      */
     private function request(string $endpoint, array $params = []): array
     {
-        $base = Http::baseUrl('https://api.giphy.com/v1/gifs');
-
         $query = array_merge(['api_key' => $this->apiKey], $params);
 
-        $fullUrl = 'https://api.giphy.com/v1/gifs/'.$endpoint.'?'.http_build_query($query);
-
-        $resp = $base->withOptions(['query' => []])->get($fullUrl);
+        $resp = Http::baseUrl('https://api.giphy.com/v1/gifs')
+            ->get($endpoint, $query);
 
         if ($resp->failed()) {
             throw new ExternalApiException('Giphy error: '.$resp->status());

@@ -1,10 +1,8 @@
 services:
   app:
-    environment:
-      APP_ENV: local
-      APP_DEBUG: "true"
+    env_file:
+      - .env.local
     volumes: [".:/var/www/html"]
-    profiles: ["dev"]
 
   node:
     command: >

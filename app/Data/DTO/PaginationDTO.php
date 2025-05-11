@@ -2,7 +2,9 @@
 
 namespace App\Data\DTO;
 
-final readonly class PaginationDTO
+use JsonSerializable;
+
+final readonly class PaginationDTO implements JsonSerializable
 {
     public function __construct(
         public int $total,
@@ -13,7 +15,7 @@ final readonly class PaginationDTO
     public function jsonSerialize(): array
     {
         return [
-            'total_count' => $this->total_count,
+            'total_count' => $this->total,
             'count' => $this->count,
             'offset' => $this->offset,
         ];
