@@ -37,24 +37,21 @@ A Laravel REST API integrating with GIPHY, featuring:
     ```
 
 3. **Build & start containers**
-
-   - Production mode (build assets once):
-   
+ 
    ```bash
-   docker compose up -d --build
-   ```
-
-    - Development mode (Vite in watch mode on port 5173):
-
-   ```bash
-   docker compose --profile dev up -d --build
+   docker compose \
+    -f docker-compose.yml \
+    -f docker-compose.override.yml \
+    --profile dev \
+    up -d --build
    ```
 
 4. **Run database migrations & Passport**
 
    ```bash
    docker compose exec app php artisan migrate
-   docker compose exec app php artisan passport:install --force
+   docker compose exec app php artisan passport:install --force --no-interaction
+   docker compose exec app php artisan passport:restore
    ```
 
 ---
@@ -64,13 +61,14 @@ A Laravel REST API integrating with GIPHY, featuring:
 1. **Run all tests:**
 
    ```bash
-   docker compose exec app php artisan test
+   docker compose exec app composer test
    ```
    
 2. **Generate code coverage report:**
 
    ```bash
    docker compose exec app vendor/bin/phpunit --coverage-html storage/coverage
+   docker compose exec app php artisan passport:restore
    open storage/coverage/index.html
    ```
 3. **You will see the current code coverage:**
